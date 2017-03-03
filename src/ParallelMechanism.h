@@ -1,4 +1,5 @@
-#include "SixDOF.h"
+// Copyright (c) 2017 shoarai
+
 #include "Vector/SquareMatrix.h"
 #include "Vector/Vector.h"
 
@@ -18,49 +19,35 @@ private:
 };
 
 class ParallelMechanism {
-protected:
 public:
-  Vector vecP;    // 運動座標系原点の位置ベクトル
-  Vector vecPdef; // 運動座標系原点の位置ベクトルの初期値
-  Leg legPos;     // 脚の位置
-  Leg legVel;     // 脚の速度
+  Leg legPos; // 脚の位置
+  Leg legVel; // 脚の速度
 
-  ParallelMechanism()
-      : enMechaState(MECHA_OUT), matJ(6), detJ(0), dexterity(0){};
-
+  ParallelMechanism();
   virtual ~ParallelMechanism(){};
 
   virtual void changePosition(CDBL &x, CDBL &y, CDBL &z, CDBL &phi, CDBL &theta,
                               CDBL &psi) = 0;
-  virtual void calculateLegVelocity(CDBL &x,     // Vx
-                                    CDBL &y,     // Vy
-                                    CDBL &z,     // Vz
-                                    CDBL &phi,   // Wφ
-                                    CDBL &theta, // Wθ
-                                    CDBL &psi)   // Wψ
-      = 0;                                       // 速度計算
+  virtual void calculateActuatorVelocity(CDBL &Vx, CDBL &Vy, CDBL &Vz,
+                                         CDBL &Wphi, CDBL &Wtheta,
+                                         CDBL &Wpsi) = 0;
 
 protected:
-  SixDOF sixDof;             // 6自由度姿勢
-  SixDOF sixVel;             // 6自由度速度
-  SquareMat matJ;            // ヤコビ行列
-  double detJ;               // ヤコビ行列式
-  double dexterity;          // 器用性
-  void calculateDexterity(); // 器用性計算（未実装）
-  void inLmt();              // 動作領域内
-  void outLmt();             // 動作領域外
+  SquareMat jacobianMatrix;   // ヤコビ行列
+  double jacobianDeterminant; // ヤコビ行列式
+  double dexterity;           // 器用性
+  void calculateDexterity();  // 器用性計算（未実装）
+  void beWithinLimit();       // 動作領域内
+  void beOutsideLimit();      // 動作領域外
 
-  virtual void invrsDis() = 0;   // 逆変位計算
-  virtual void calcJacobi() = 0; // ヤコビ行列計算
-  virtual void chkLmt() = 0;     // 可動制限判定
+  virtual void inverseDisplacement() = 0;     // 逆変位計算
+  virtual void calculateJacobianMatrix() = 0; // ヤコビ行列計算
+  virtual void judgeMechanismState() = 0;     // 可動制限判定
 
 private:
-  // メカニズムの状態
   enum EN_MECHA_STATE {
     MECHA_IN = 0, // 動作領域内
     MECHA_OUT,    // 動作領域外
     MECHA_STATE_MAX
-  };
-
-  EN_MECHA_STATE enMechaState; // メカニズムの状態
+  } enMechaState;
 };

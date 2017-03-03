@@ -1,9 +1,7 @@
-// 機能			：6自由度運動
+// Copyright (c) 2017 shoarai
 
 #include "SixDOF.h"
-// #include <conio.h> // kbit、_getch用
-// #include <iomanip>  // setw用
-#include <iostream> // cout用
+#include <iostream>
 
 using namespace std;
 

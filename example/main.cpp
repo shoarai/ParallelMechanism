@@ -1,7 +1,6 @@
 // Copyright (c) 2017 shoarai
 
 #include "../src/StewartPlatform.h"
-#include "unistd.h"
 #include <iostream>
 
 using namespace std;
@@ -16,12 +15,9 @@ int main() {
 
   shared_ptr<ParallelMechanism> pMecha = make_shared<StewartPlatform>();
 
-  // Position position(0, 1, 2, 3, 4, 5);
-  // 座標算出
   pMecha->changePosition(0, 1, 2, 3, 4, 5);
 
-  // 逆速度解析
-  pMecha->calculateLegVelocity(0, 1, 2, 3, 4, 5);
+  pMecha->calculateActuatorVelocity(0, 1, 2, 3, 4, 5);
 
   cout << "Leg position" << '\n';
   cout << "Leg1: \t" << pMecha->legPos.getData1() << "\n";

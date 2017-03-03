@@ -1,3 +1,4 @@
+// Copyright (c) 2017 shoarai
 
 #include "ParallelMechanism.h"
 
@@ -12,22 +13,25 @@ void Leg::setData(CDBL &d1, CDBL &d2, CDBL &d3, CDBL &d4, CDBL &d5, CDBL &d6) {
   data6 = d6;
 }
 
-// 領域内
-void ParallelMechanism::inLmt() { enMechaState = MECHA_IN; }
+ParallelMechanism::ParallelMechanism()
+    : enMechaState(MECHA_OUT), jacobianMatrix(6), jacobianDeterminant(0),
+      dexterity(0){};
 
-// 領域外
-void ParallelMechanism::outLmt() { enMechaState = MECHA_OUT; }
+void ParallelMechanism::beWithinLimit() { enMechaState = MECHA_IN; }
+
+void ParallelMechanism::beOutsideLimit() { enMechaState = MECHA_OUT; }
 
 // 器用性を計算する
 void ParallelMechanism::calculateDexterity() {
   // 行列式が存在しないとき
-  if (detJ == 0) {
+  if (jacobianDeterminant == 0) {
     return;
   }
 
   // ノルム計算
   double k =
-      matJ.norm() * matJ.invrs(detJ).norm(); // ←行列のノルム計算ができてない！
+      jacobianMatrix.norm() * jacobianMatrix.invrs(jacobianDeterminant)
+                                  .norm(); // ←行列のノルム計算ができてない！
 
   if (k == 0) {
     return;
