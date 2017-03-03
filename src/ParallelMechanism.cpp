@@ -12,28 +12,6 @@ void Leg::setData(CDBL &d1, CDBL &d2, CDBL &d3, CDBL &d4, CDBL &d5, CDBL &d6) {
   data6 = d6;
 }
 
-// プラットフォームの姿勢設定
-void ParallelMechanism::setPlatformPosition(CDBL &x,     // x
-                                            CDBL &y,     // y
-                                            CDBL &z,     // z
-                                            CDBL &phi,   // φ
-                                            CDBL &theta, // θ
-                                            CDBL &psi)   // ψ
-{
-  sixDof.setData(x, y, z, phi, theta, psi);
-}
-
-// プラットフォームの速度設定
-void ParallelMechanism::setPlatformVelocity(CDBL &x,     // Vx
-                                            CDBL &y,     // Vy
-                                            CDBL &z,     // Vz
-                                            CDBL &phi,   // Wφ
-                                            CDBL &theta, // Wθ
-                                            CDBL &psi)   // Wψ
-{
-  sixVel.setData(x, y, z, phi, theta, psi);
-}
-
 // 領域内
 void ParallelMechanism::inLmt() { enMechaState = MECHA_IN; }
 

@@ -72,11 +72,17 @@ private:
   ExpansibleLeg *leg[LEG_NUM_MAX]; // 可変長の脚
 
 public:
-  StewartPlatform();  // コンストラクタ
-  ~StewartPlatform(); // デストラクタ
+  StewartPlatform();
+  ~StewartPlatform();
 
-  void calculateCoordinate(); // 座標算出
-  void calculateVelocity();   // 速度解析
+  void changePosition(CDBL &x, CDBL &y, CDBL &z, CDBL &phi, CDBL &theta,
+                      CDBL &psi);
+  void calculateLegVelocity(CDBL &x,     // Vx
+                            CDBL &y,     // Vy
+                            CDBL &z,     // Vz
+                            CDBL &phi,   // Wφ
+                            CDBL &theta, // Wθ
+                            CDBL &psi);  // Wψ // 速度解析
 
 protected:
   virtual void chkLmt(); // 可動制限判定

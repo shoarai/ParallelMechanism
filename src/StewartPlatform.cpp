@@ -212,9 +212,12 @@ void StewartPlatform::calcJacobi() {
 }
 
 // 座標を算出する
-void StewartPlatform::calculateCoordinate() {
+void StewartPlatform::changePosition(CDBL &x, CDBL &y, CDBL &z, CDBL &phi,
+                                     CDBL &theta, CDBL &psi) {
   // 可動領域判定リセット
   inLmt();
+
+  sixDof.setData(x, y, z, phi, theta, psi);
 
   // 逆変位計算
   invrsDis();
@@ -233,7 +236,15 @@ void StewartPlatform::calculateCoordinate() {
 }
 
 // 脚底部の速度算出
-void StewartPlatform::calculateVelocity() {
+void StewartPlatform::calculateLegVelocity(CDBL &x,     // Vx
+                                           CDBL &y,     // Vy
+                                           CDBL &z,     // Vz
+                                           CDBL &phi,   // Wφ
+                                           CDBL &theta, // Wθ
+                                           CDBL &psi)   // Wψ
+{
+  sixVel.setData(x, y, z, phi, theta, psi);
+
   // ヤコビ行列計算
   calcJacobi();
 

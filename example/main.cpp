@@ -16,29 +16,29 @@ int main() {
 
   shared_ptr<ParallelMechanism> pMecha = make_shared<StewartPlatform>();
 
-  // pMecha->reset();
+  // Position position(0, 1, 2, 3, 4, 5);
+  // 座標算出
+  pMecha->changePosition(0, 1, 2, 3, 4, 5);
 
-  for (int i = 0; i < 4; i++) {
-    // Position position(0, 1, 2, 3, 4, 5);
-    // プラットフォーム設定
-    pMecha->setPlatformPosition(0, 1, 2, 3, 4, 5);
-    // 座標算出
-    pMecha->calculateCoordinate();
+  // 逆速度解析
+  pMecha->calculateLegVelocity(0, 1, 2, 3, 4, 5);
 
-    // if (((CheckHitKey(KEY_INPUT_LSHIFT) == TRUE) ||
-    //  CheckHitKey(KEY_INPUT_RSHIFT) == TRUE)) {
-    //        pMecha->calculateVelocity(); // 逆速度解析
-    // }
+  cout << "Leg position" << '\n';
+  cout << "Leg1: \t" << pMecha->legPos.getData1() << "\n";
+  cout << "Leg2: \t" << pMecha->legPos.getData2() << "\n";
+  cout << "Leg3: \t" << pMecha->legPos.getData3() << "\n";
+  cout << "Leg4: \t" << pMecha->legPos.getData4() << "\n";
+  cout << "Leg5: \t" << pMecha->legPos.getData5() << "\n";
+  cout << "Leg6: \t" << pMecha->legPos.getData6() << "\n";
 
-    cout << "Leg1: \t" << pMecha->legPos.getData1() << "\n";
-    cout << "Leg2: \t" << pMecha->legPos.getData2() << "\n";
-    cout << "Leg3: \t" << pMecha->legPos.getData3() << "\n";
-    cout << "Leg4: \t" << pMecha->legPos.getData4() << "\n";
-    cout << "Leg5: \t" << pMecha->legPos.getData5() << "\n";
-    cout << "Leg6: \t" << pMecha->legPos.getData6() << "\n";
-    //   sleep(1);
-  }
-  //
+  cout << "Leg velocity" << '\n';
+  cout << "Leg1: \t" << pMecha->legVel.getData1() << "\n";
+  cout << "Leg2: \t" << pMecha->legVel.getData2() << "\n";
+  cout << "Leg3: \t" << pMecha->legVel.getData3() << "\n";
+  cout << "Leg4: \t" << pMecha->legVel.getData4() << "\n";
+  cout << "Leg5: \t" << pMecha->legVel.getData5() << "\n";
+  cout << "Leg6: \t" << pMecha->legVel.getData6() << "\n";
+
   cout << "end" << '\n';
   return 0;
 }

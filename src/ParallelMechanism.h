@@ -29,23 +29,16 @@ public:
       : enMechaState(MECHA_OUT), matJ(6), detJ(0), dexterity(0){};
 
   virtual ~ParallelMechanism(){};
-  void setPlatformPosition( // プラットフォームの姿勢設定
-      CDBL &x,              // x
-      CDBL &y,              // y
-      CDBL &z,              // z
-      CDBL &phi,            // φ
-      CDBL &theta,          // θ
-      CDBL &psi);           // ψ
-  void setPlatformVelocity( // プラットフォームの速度設定
-      CDBL &x,              // Vx
-      CDBL &y,              // Vy
-      CDBL &z,              // Vz
-      CDBL &phi,            // Wφ
-      CDBL &theta,          // Wθ
-      CDBL &psi);           // Wψ
 
-  virtual void calculateCoordinate() = 0; // 座標算出
-  virtual void calculateVelocity() = 0;   // 速度計算
+  virtual void changePosition(CDBL &x, CDBL &y, CDBL &z, CDBL &phi, CDBL &theta,
+                              CDBL &psi) = 0;
+  virtual void calculateLegVelocity(CDBL &x,     // Vx
+                                    CDBL &y,     // Vy
+                                    CDBL &z,     // Vz
+                                    CDBL &phi,   // Wφ
+                                    CDBL &theta, // Wθ
+                                    CDBL &psi)   // Wψ
+      = 0;                                       // 速度計算
 
 protected:
   SixDOF sixDof;             // 6自由度姿勢
