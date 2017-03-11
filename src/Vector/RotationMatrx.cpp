@@ -1,3 +1,4 @@
+// Copyright © 2017 shoarai
 
 #include "RotationMatrix.h"
 

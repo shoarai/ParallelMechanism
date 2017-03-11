@@ -1,3 +1,5 @@
+// Copyright © 2017 shoarai
+
 #ifndef _TYPEDEF_H_
 #define _TYPEDEF_H_
 

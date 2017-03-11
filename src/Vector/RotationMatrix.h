@@ -1,3 +1,5 @@
+// Copyright © 2017 shoarai
+
 #ifndef _ROTATION_MATRIX_H_
 #define _ROTATION_MATRIX_H_
 

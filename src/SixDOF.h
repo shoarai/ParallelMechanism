@@ -1,4 +1,4 @@
-// Copyright (c) 2017 shoarai
+// Copyright © 2017 shoarai
 
 #ifndef _SIX_DOF_H_
 #define _SIX_DOF_H_

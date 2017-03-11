@@ -1,3 +1,4 @@
+// Copyright © 2017 shoarai
 
 #include "SquareMatrix.h"
 #include <string>

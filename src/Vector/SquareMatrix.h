@@ -1,3 +1,5 @@
+// Copyright © 2017 shoarai
+
 #ifndef _SQUARE_MATRIX_H_
 #define _SQUARE_MATRIX_H_
 

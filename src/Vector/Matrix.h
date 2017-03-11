@@ -1,3 +1,4 @@
+// Copyright © 2017 shoarai
 
 #ifndef _MATRIX_H_
 #define _MATRIX_H_

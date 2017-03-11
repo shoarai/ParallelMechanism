@@ -1,4 +1,4 @@
-// Copyright (c) 2017 shoarai
+// Copyright © 2017 shoarai
 
 #include "Position.h"
 #include "Vector/SquareMatrix.h"

@@ -1,3 +1,4 @@
+// Copyright © 2017 shoarai
 
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
