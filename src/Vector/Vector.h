@@ -1,72 +1,54 @@
-//------------------------------------------//
-// ���O			�F�x�N�g��					//
-// CPU			�F //
-// �R���p�C��	�FVisual C++				//
-// �@�\			�F�x�N�g��					//
-//----------------- ���� -------------------//
-// ���t			����	���e				//
-// 2012.05.15	�V��	�V�K�쐬			//
-//------------------------------------------//
+
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
-//------------------------------------------//
-//				�C���N���[�h				//
-//------------------------------------------//
 #include "typedef.h"
 
-//------------------------------------------//
-//				�N�@���@�X //
-//------------------------------------------//
 class Vector {
 private:
-  double m_x; // x����
-  double m_y; // y����
-  double m_z; // z����
+  double m_x; // x成分
+  double m_y; // y成分
+  double m_z; // z成分
 
 public:
-  // �R���X�g���N�^
+  // コンストラクタ
   Vector();
   Vector(CDBL &, CDBL &, CDBL &);
 
-  // �x�N�g�������������o��
+  // ベクトル成分を取り出す
   CDBL getx() const;
   CDBL gety() const;
   CDBL getz() const;
 
-  // �x�N�g���������ݒ肷��
+  // ベクトル成分を設定する
   void set(CDBL &, CDBL &, CDBL &);
   void setx(CDBL &);
   void sety(CDBL &);
   void setz(CDBL &);
 
-  // �x�N�g���Ƃ̉����Z
+  // ベクトルとの加減算
   Vector operator+(const Vector &) const;
   Vector &operator+=(const Vector &);
   Vector operator-(const Vector &) const;
   Vector &operator-=(const Vector &);
 
-  // ���l�Ƃ̏揜�Z
+  // 数値との乗除算
   Vector operator*(CDBL &)const;
   Vector &operator*=(CDBL &);
   Vector operator/(CDBL &) const;
   Vector &operator/=(CDBL &);
 
-  Vector operator*(const Vector &)const;  //  �x�N�g���̊O��
-  double operator%(const Vector &) const; //  �x�N�g���̓���
+  Vector operator*(const Vector &)const;  //  ベクトルの外積
+  double operator%(const Vector &) const; //  ベクトルの内積
 
-  // VECTOR�N���X�ɃL���X�g����
-  // operator VECTOR();
+  double norm() const;      // ノルムを求める
+  Vector normalize() const; // ベクトルを正規化をする
 
-  double norm() const; // �m���������߂�
-  Vector
-  normalize() const; // �x�N�g���𐳋K��������
+  // 座標変換
+  Vector rct2plr() const; // 直交座標系→極座標系
+  Vector plr2rct() const; // 極座標系→直交座標系
 
-  // ���W�ϊ�
-  Vector rct2plr() const; // �������W�n���ɍ��W�n
-  Vector plr2rct() const; // �ɍ��W�n���������W�n
-
-  // �ɍ��W�n���������W�n�i2�����Ή��j
+  // 極座標系→直交座標系（2次元対応）
   void setPolar2cart(CDBL &rad, CDBL &angleXY, CDBL &angleToZ = deg2rad(90));
 };
 

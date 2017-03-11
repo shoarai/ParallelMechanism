@@ -1,6 +1,5 @@
-// Copyright (c) 2017 shoarai
-
-#pragma once
+#ifndef _TYPEDEF_H_
+#define _TYPEDEF_H_
 
 #define _USE_MATH_DEFINES // π用
 
@@ -17,9 +16,6 @@ CDBL PI = M_PI;                   // π
 CDBL GRAVITY_m = 9.80665;         // 重力加速度[m/s2]
 CDBL GRAVITY_mm = 9.80665 * 1000; // 重力加速度[mm/s2]
 
-//------------------------------------------//
-//				インライン //
-//------------------------------------------//
 template <class T> inline T square(const T &x) { // ２乗
   return ((x) * (x));
 }
@@ -60,11 +56,4 @@ template <class T> inline T meter2mm(const T &x) { // [m]→[mm]
   return ((x)*1000);
 }
 
-// template<class T>
-// inline std::string val2str(const T& x)	// 値→文字列
-// {
-// 	std::ostringstream os;
-// 	os << x;
-//
-// 	return os.str();
-// }
+#endif // _TYPEDEF_H_

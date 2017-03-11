@@ -1,29 +1,14 @@
-//------------------------------------------//
-// ���O			�F�s��						//
-// CPU			�F //
-// �R���p�C��	�FVisual C++				//
-// �@�\			�F�s��						//
-//----------------- ���� -------------------//
-// ���t			����	���e				//
-// 2012.05.15	�V��	�V�K�쐬			//
-//------------------------------------------//
 #ifndef _SQUARE_MATRIX_H_
 #define _SQUARE_MATRIX_H_
-//------------------------------------------//
-//				�C���N���[�h				//
-//------------------------------------------//
+
 #include "Matrix.h"
 
-//------------------------------------------//
-//				�N�@���@�X //
-//------------------------------------------//
 class SquareMat : public Matrix {
 public:
-  int num; // �s���̍s���i���񐔁j
-  // CUINT num; // �s���̍s���i���񐔁j
+  UINT num; // 行列の行数（＝列数）
 
 public:
-  // �R���X�g���N�^
+  // コンストラクタ
   explicit SquareMat(UINT);
 
   SquareMat(CDBL &, CDBL &, CDBL &, CDBL &, CDBL &, CDBL &, CDBL &, CDBL &,
@@ -32,23 +17,23 @@ public:
             CDBL &, CDBL &, CDBL &, CDBL &, CDBL &, CDBL &, CDBL &, CDBL &,
             CDBL &, CDBL &, CDBL &, CDBL &);
 
-  SquareMat(const Matrix &); // �R�s�[�R���X�g���N�^
-  virtual ~SquareMat(){};    // �f�X�g���N�^
+  SquareMat(const Matrix &); // コピーコンストラクタ
+  virtual ~SquareMat(){};    // デストラクタ
 
-  // �����s���̑���
+  // 正方行列の代入
   SquareMat &operator=(const Matrix &);
 
-  // �s���N���X�ւ̃L���X�g
+  // 行列クラスへのキャスト
   // operator Matrix();
 
-  double norm() const;              // �m����
-  double det() const;               // �s����
-  SquareMat invrs(CDBL &det) const; // �t�s��
+  double norm() const;              // ノルム
+  double det() const;               // 行列式
+  SquareMat invrs(CDBL &det) const; // 逆行列
 
 private:
-  double cofactor(UINT, UINT) const; // �]���q
-  double trace() const;              // �Ίp�a
-  SquareMat adjMat() const;          // �]���q�s��
+  double cofactor(UINT, UINT) const; // 余因子
+  double trace() const;              // 対角和
+  SquareMat adjMat() const;          // 余因子行列
 };
 
 #endif

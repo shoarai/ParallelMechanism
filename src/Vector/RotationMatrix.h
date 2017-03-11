@@ -1,41 +1,26 @@
-//------------------------------------------//
-// –¼‘O			FƒxƒNƒgƒ‹					//
-// CPU			F							//
-// ƒRƒ“ƒpƒCƒ‰	FVisual C++				//
-// ‹@”\			FƒxƒNƒgƒ‹					//
-//----------------- —š—ğ -------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.05.15	Vˆä	V‹Kì¬			//
-//------------------------------------------//
 #ifndef _ROTATION_MATRIX_H_
 #define _ROTATION_MATRIX_H_
 
-//------------------------------------------//
-//				ƒCƒ“ƒNƒ‹[ƒh				//
-//------------------------------------------//
 #include "Vector.h"
 
-//------------------------------------------//
-//				ƒN@ƒ‰@ƒX					//
-//------------------------------------------//
-class RotationMatrix{
+class RotationMatrix {
 public:
-	RotationMatrix();			// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	RotationMatrix(				// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		const double &phi,			// x²ü‚è‚ÌŠp“x
-		const double &sit,			// y²ü‚è‚ÌŠp“x
-		const double &psi);			// z²ü‚è‚ÌŠp“x
-	void calcRotateMat(			// ‰ñ“]s—ñŒvZ
-		const double &phi,			// x²ü‚è‚ÌŠp“x
-		const double &sit,			// y²ü‚è‚ÌŠp“x
-		const double &psi);			// z²ü‚è‚ÌŠp“x
-	Vector			rotateVec   (const Vector &) const;			// ƒxƒNƒgƒ‹‰ñ“]
-	Vector			rotateInvVec(const Vector &) const;			// ƒxƒNƒgƒ‹‹t‰ñ“]
-	RotationMatrix	operator*(const RotationMatrix &) const;	// ‰ñ“]s—ñ‚ÌÏ
+  RotationMatrix();                          // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+  RotationMatrix(                            // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+      const double &phi,                     // xè»¸å‘¨ã‚Šã®è§’åº¦
+      const double &sit,                     // yè»¸å‘¨ã‚Šã®è§’åº¦
+      const double &psi);                    // zè»¸å‘¨ã‚Šã®è§’åº¦
+  void calcRotateMat(                        // å›è»¢è¡Œåˆ—è¨ˆç®—
+      const double &phi,                     // xè»¸å‘¨ã‚Šã®è§’åº¦
+      const double &sit,                     // yè»¸å‘¨ã‚Šã®è§’åº¦
+      const double &psi);                    // zè»¸å‘¨ã‚Šã®è§’åº¦
+  Vector rotateVec(const Vector &) const;    // ãƒ™ã‚¯ãƒˆãƒ«å›è»¢
+  Vector rotateInvVec(const Vector &) const; // ãƒ™ã‚¯ãƒˆãƒ«é€†å›è»¢
+  RotationMatrix operator*(const RotationMatrix &)const; // å›è»¢è¡Œåˆ—ã®ç©
 
 private:
-	enum{NUM = 3};				// s—ñ‚Ìs”i—ñ”j
-	double element[NUM][NUM];	// s—ñ¬•ª
+  enum { NUM = 3 };         // è¡Œåˆ—ã®è¡Œæ•°ï¼ˆï¼åˆ—æ•°ï¼‰
+  double element[NUM][NUM]; // è¡Œåˆ—æˆåˆ†
 };
 
-#endif	// _ROTATION_MATRIX_H_
+#endif // _ROTATION_MATRIX_H_

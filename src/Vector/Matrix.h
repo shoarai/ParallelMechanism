@@ -1,65 +1,51 @@
-//------------------------------------------//
-// ���O			�F�s��						//
-// CPU			�F //
-// �R���p�C��	�FVisual C++				//
-// �@�\			�F�s��						//
-//----------------- ���� -------------------//
-// ���t			����	���e				//
-// 2012.05.15	�V��	�V�K�쐬			//
-//------------------------------------------//
+
 #ifndef _MATRIX_H_
 #define _MATRIX_H_
 
-//#define _STD_VECTOR_		// std::vector���g��
-//------------------------------------------//
-//				�C���N���[�h				//
-//------------------------------------------//
+//#define _STD_VECTOR_		// std::vectorを使う
 #ifdef _STD_VECTOR_
 #include <vector>
 #endif
 #include "typedef.h"
 
-//------------------------------------------//
-//				�N�@���@�X //
-//------------------------------------------//
 class Matrix {
 public:
-  CUINT m_row; // �s
-  CUINT m_col; // ��
+  CUINT m_row; // 行
+  CUINT m_col; // 列
 
 #ifdef _STD_VECTOR_
   std::vector<std::vector<double>> val;
 #else
-  double **val; // �s���v�f�p�|�C���^
+  double **val; // 行列要素用ポインタ
 #endif
 
 public:
-  explicit Matrix(UINT, UINT); // �R���X�g���N�^
-  Matrix(const Matrix &);      // �R�s�[�R���X�g���N�^
-  virtual ~Matrix();           // �f�X�g���N�^
+  explicit Matrix(UINT, UINT); // コンストラクタ
+  Matrix(const Matrix &);      // コピーコンストラクタ
+  virtual ~Matrix();           // デストラクタ
 
-  // �s���v�f�������o��
+  // 行列要素を取り出す
   double &operator()(UINT row, UINT colN);
 
-  // �s���̑���
+  // 行列の代入
   Matrix &operator=(const Matrix &);
 
-  // �s���Ƃ̉����Z
+  // 行列との加減算
   Matrix operator+(const Matrix &) const;
   Matrix &operator+=(const Matrix &);
   Matrix operator-(const Matrix &) const;
   Matrix &operator-=(const Matrix &);
 
-  // �s���Ƃ̐�
+  // 行列との積
   Matrix operator*(const Matrix &)const;
 
-  // ���l�Ƃ̏揜�Z
+  // 数値との乗除算
   Matrix operator*(CDBL &)const;
   Matrix &operator*=(CDBL &);
   Matrix operator/(CDBL &) const;
   Matrix &operator/=(CDBL &);
 
-  // �]�u�s��
+  // 転置行列
   Matrix transpose() const;
 };
 

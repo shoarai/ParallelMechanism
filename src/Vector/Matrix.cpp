@@ -1,502 +1,255 @@
-//------------------------------------------//
-// –¼‘O			Fs—ñ						//
-// CPU			F							//
-// ƒRƒ“ƒpƒCƒ‰	FVisual C++				//
-// ‹@”\			Fs—ñ						//
-//----------------- —š—ğ -------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.14	Vˆä	V‹Kì¬			//
-//------------------------------------------//
 
-//------------------------------------------//
-//				ƒCƒ“ƒNƒ‹[ƒh				//
-//------------------------------------------//
 #include "Matrix.h"
 #include <string>
 
-//------------------------------------------//
-//				ƒCƒ“ƒNƒ‹[ƒh				//
-//------------------------------------------//
 using namespace std;
-
-//------------------------------------------//
-// ‹@”\		Fs—ñ—v‘f‚ğ‰Šú‰»‚·‚é			//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		F‚È‚µ							//
-// –ß‚è’l	F‚È‚µ							//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.13	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix::Matrix(UINT row, UINT col) : m_row(row), m_col(col)
-{
+Matrix::Matrix(UINT row, UINT col) : m_row(row), m_col(col) {
 #ifdef _STD_VECTOR_
-	// s‚Ì—v‘f”‚ğİ’è‚·‚é
-	val.resize(m_row);
+  // è¡Œã®è¦ç´ æ•°ã‚’è¨­å®šã™ã‚‹
+  val.resize(m_row);
 
-	for(UINT i = 0; i < m_row; i++)
-	{
-		// —ñ‚Ì—v‘f”‚ğİ’è‚·‚é
-		val[i].resize(m_col);
-	}
+  for (UINT i = 0; i < m_row; i++) {
+    // åˆ—ã®è¦ç´ æ•°ã‚’è¨­å®šã™ã‚‹
+    val[i].resize(m_col);
+  }
 #else
-	// s—v‘f‚ğ¶¬‚·‚é
-	val = new double*[m_row];
+  // è¡Œè¦ç´ ã‚’ç”Ÿæˆã™ã‚‹
+  val = new double *[m_row];
 
-	for (UINT i = 0; i < m_row; i++)
-	{
-		// —ñ—v‘f‚ğ¶¬‚·‚é
-		val[i] = new double[m_col];
-	}
- 
-	// s—ñ—v‘f‚ğ‰Šú‰»‚·‚é
-	for(UINT i = 0; i < m_row; i++)
-	{
-		for(UINT j = 0; j < m_col; j++)
-		{
-			val[i][j] = 0;
-		}
-	}
+  for (UINT i = 0; i < m_row; i++) {
+    // åˆ—è¦ç´ ã‚’ç”Ÿæˆã™ã‚‹
+    val[i] = new double[m_col];
+  }
+
+  // è¡Œåˆ—è¦ç´ ã‚’åˆæœŸåŒ–ã™ã‚‹
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      val[i][j] = 0;
+    }
+  }
 #endif
 }
 
-//------------------------------------------//
-// ‹@”\		Fs—ñ—v‘f‚ğƒIƒuƒWƒFƒNƒg‚Å‰Šú‰»‚·‚é//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		F‚È‚µ							//
-// –ß‚è’l	F‚È‚µ							//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.13	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix::Matrix(const Matrix& mat) :
-	m_row(mat.m_row), m_col(mat.m_col)
-{
+Matrix::Matrix(const Matrix &mat) : m_row(mat.m_row), m_col(mat.m_col) {
 #ifdef _STD_VECTOR_
-	// s‚Ì—v‘f”‚ğİ’è‚·‚é
-	val.resize(m_row);
+  // è¡Œã®è¦ç´ æ•°ã‚’è¨­å®šã™ã‚‹
+  val.resize(m_row);
 
-	for(UINT i = 0; i < m_row; i++)
-	{
-		// —ñ‚Ì—v‘f”‚ğİ’è‚·‚é
-		val[i].resize(m_col);
-	}
+  for (UINT i = 0; i < m_row; i++) {
+    // åˆ—ã®è¦ç´ æ•°ã‚’è¨­å®šã™ã‚‹
+    val[i].resize(m_col);
+  }
 #else
-	// —ñ¬•ª¶¬
-	val = new double*[m_row];
+  // åˆ—æˆåˆ†ç”Ÿæˆ
+  val = new double *[m_row];
 
-	for (UINT i = 0; i < m_row; i++)
-	{
-		// s¬•ª¶¬
-		val[i] = new double[m_col];
-	}
-	
-	// ’l‘ã“ü
-	for(UINT i = 0; i < m_row; i++)
-	{
-		for(UINT j = 0; j < m_col; j++)
-		{
-			val[i][j] = mat.val[i][j];
-		}
-	}
+  for (UINT i = 0; i < m_row; i++) {
+    // è¡Œæˆåˆ†ç”Ÿæˆ
+    val[i] = new double[m_col];
+  }
+
+  // å€¤ä»£å…¥
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      val[i][j] = mat.val[i][j];
+    }
+  }
 #endif
 }
 
-//------------------------------------------//
-// ‹@”\		Fs—ñ—v‘f‚ğ”jŠü‚·‚é			//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		F‚È‚µ							//
-// –ß‚è’l	F‚È‚µ							//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.13	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix::~Matrix()
-{
+Matrix::~Matrix() {
 #ifdef _STD_VECTOR_
 #else
-	// s—ñ—v‘f”jŠü
-	for (UINT i = 0; i < m_row; i++){
-		delete[] val[i];
-	}
+  // è¡Œåˆ—è¦ç´ ç ´æ£„
+  for (UINT i = 0; i < m_row; i++) {
+    delete[] val[i];
+  }
 
-	delete[] val;
+  delete[] val;
 #endif
 }
 
-//------------------------------------------//
-// ‹@”\		Fs—ñ—v‘f‚ğæ“¾‚·‚é			//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		F‚È‚µ							//
-// –ß‚è’l	F‚È‚µ							//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.13	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-double& Matrix::operator()(UINT row, UINT col)
-{
-	return val[row-1][col-1];
-}
+double &Matrix::operator()(UINT row, UINT col) { return val[row - 1][col - 1]; }
 
-//------------------------------------------//
-// ‹@”\		F‘ã“ü‰‰Zq					//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		Fs—ñƒIƒuƒWƒFƒNƒg				//
-// –ß‚è’l	Fs—ñƒIƒuƒWƒFƒNƒg				//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.13	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix& Matrix::operator=(const Matrix& mat)
-{
-	// s—ñ“¯m‚Ìs”‚Æ—ñ”‚ª“™‚µ‚­‚È‚¢‚Æ‚«
-	if(m_row != mat.m_row || m_col != mat.m_col)
-	{
-		string err = "Matrix can't be substituted";
-		throw err;
-	}
+Matrix &Matrix::operator=(const Matrix &mat) {
+  // è¡Œåˆ—åŒå£«ã®è¡Œæ•°ã¨åˆ—æ•°ãŒç­‰ã—ããªã„ã¨ã
+  if (m_row != mat.m_row || m_col != mat.m_col) {
+    string err = "Matrix can't be substituted";
+    throw err;
+  }
 
 #ifdef _STD_VECTOR_
-	// s‚Ì—v‘f”‚ğİ’è‚·‚é
-	val.resize(m_row);
+  // è¡Œã®è¦ç´ æ•°ã‚’è¨­å®šã™ã‚‹
+  val.resize(m_row);
 
-	for(UINT i = 0; i < m_row; i++)
-	{
-		// —ñ‚Ì—v‘f”‚ğİ’è‚·‚é
-		val[i].resize(m_col);
-	}
+  for (UINT i = 0; i < m_row; i++) {
+    // åˆ—ã®è¦ç´ æ•°ã‚’è¨­å®šã™ã‚‹
+    val[i].resize(m_col);
+  }
 #endif
 
-	for(UINT i = 0; i < m_row; i++)
-	{
-		for(UINT j = 0; j < m_col; j++)
-		{
-			val[i][j] = mat.val[i][j];
-		}
-	}
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      val[i][j] = mat.val[i][j];
+    }
+  }
 
-	return *this;
+  return *this;
 }
 
-//------------------------------------------//
-// ‹@”\		F+‰‰Zq						//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		Fs—ñƒIƒuƒWƒFƒNƒg				//
-// –ß‚è’l	Fs—ñƒIƒuƒWƒFƒNƒg				//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.14	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix Matrix::operator+(const Matrix& mat) const
-{
-	// s—ñ“¯m‚Ìs”‚Æ—ñ”‚ª“™‚µ‚­‚È‚¢‚Æ‚«
-	if(m_row != mat.m_row || m_col != mat.m_col){	
-		string err = "Matrix can't be added";
-		throw err;
+Matrix Matrix::operator+(const Matrix &mat) const {
+  // è¡Œåˆ—åŒå£«ã®è¡Œæ•°ã¨åˆ—æ•°ãŒç­‰ã—ããªã„ã¨ã
+  if (m_row != mat.m_row || m_col != mat.m_col) {
+    string err = "Matrix can't be added";
+    throw err;
+  }
 
-	}
+  // è§£ã¨ãªã‚‹è¡Œåˆ—
+  Matrix matAns(m_row, m_col);
 
-	// ‰ğ‚Æ‚È‚és—ñ
-	Matrix matAns(m_row, m_col);
+  // å—ã‘å–ã£ãŸ2ã¤ã®è¡Œåˆ—ã‚’åŠ ç®—ã™ã‚‹
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      matAns.val[i][j] = val[i][j] + mat.val[i][j];
+    }
+  }
 
-	// ó‚¯æ‚Á‚½2‚Â‚Ìs—ñ‚ğ‰ÁZ‚·‚é
-	for(UINT i = 0; i < m_row; i++)
-	{
-		for(UINT j = 0; j < m_col; j++)
-		{
-			matAns.val[i][j] = val[i][j] + mat.val[i][j];
-		}
-	}
-
-	return matAns;
+  return matAns;
 }
 
-//------------------------------------------//
-// ‹@”\		F+=‰‰Zq						//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		Fs—ñƒIƒuƒWƒFƒNƒg				//
-// –ß‚è’l	Fs—ñƒIƒuƒWƒFƒNƒg				//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.15	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix& Matrix::operator+=(const Matrix& mat)
-{
-	// s—ñ“¯m‚Ìs”‚Æ—ñ”‚ª“™‚µ‚­‚È‚¢‚Æ‚«
-	if(m_row != mat.m_row || m_col != mat.m_col){
-		string err = "Matrix can't be added";
-		throw err;
-	}
+Matrix &Matrix::operator+=(const Matrix &mat) {
+  // è¡Œåˆ—åŒå£«ã®è¡Œæ•°ã¨åˆ—æ•°ãŒç­‰ã—ããªã„ã¨ã
+  if (m_row != mat.m_row || m_col != mat.m_col) {
+    string err = "Matrix can't be added";
+    throw err;
+  }
 
-	// ó‚¯æ‚Á‚½2‚Â‚Ìs—ñ‚ğ‰ÁZ‚·‚é
-	for(UINT i = 0; i < m_row; i++)
-	{
-		for(UINT j = 0; j < m_col; j++)
-		{
-			val[i][j] += mat.val[i][j];
-		}
-	}
+  // å—ã‘å–ã£ãŸ2ã¤ã®è¡Œåˆ—ã‚’åŠ ç®—ã™ã‚‹
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      val[i][j] += mat.val[i][j];
+    }
+  }
 
-	return *this;
+  return *this;
 }
 
-//------------------------------------------//
-// ‹@”\		F-‰‰Zq						//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		Fs—ñƒIƒuƒWƒFƒNƒg				//
-// –ß‚è’l	Fs—ñƒIƒuƒWƒFƒNƒg				//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.14	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix Matrix::operator-(const Matrix& mat) const
-{
-	// s—ñ“¯m‚Ìs”‚Æ—ñ”‚ª“™‚µ‚­‚È‚¢‚Æ‚«
-	if(m_row != mat.m_row || m_col != mat.m_col){
-		string err = "Matrix can't be subtracted";
-		throw err;
-	}
+Matrix Matrix::operator-(const Matrix &mat) const {
+  // è¡Œåˆ—åŒå£«ã®è¡Œæ•°ã¨åˆ—æ•°ãŒç­‰ã—ããªã„ã¨ã
+  if (m_row != mat.m_row || m_col != mat.m_col) {
+    string err = "Matrix can't be subtracted";
+    throw err;
+  }
 
-	// ‰ğ‚Æ‚È‚és—ñ
-	Matrix matAns(m_row, m_col);
+  // è§£ã¨ãªã‚‹è¡Œåˆ—
+  Matrix matAns(m_row, m_col);
 
-	// s—ñŒ¸Z
-	for(UINT i = 0; i < m_row; i++)
-	{
-		for(UINT j = 0; j < m_col; j++)
-		{
-			matAns.val[i][j] = val[i][j] - mat.val[i][j];
-		}
-	}
+  // è¡Œåˆ—æ¸›ç®—
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      matAns.val[i][j] = val[i][j] - mat.val[i][j];
+    }
+  }
 
-	return matAns;
+  return matAns;
 }
 
+Matrix &Matrix::operator-=(const Matrix &mat) {
+  // è¡Œåˆ—åŒå£«ã®è¡Œæ•°ã¨åˆ—æ•°ãŒç­‰ã—ããªã„ã¨ã
+  if (m_row != mat.m_row || m_col != mat.m_col) {
+    string err = "Matrix can't be subtracted";
+    throw err;
+  }
 
-//------------------------------------------//
-// ‹@”\		F-=‰‰Zq						//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		Fs—ñƒIƒuƒWƒFƒNƒg				//
-// –ß‚è’l	Fs—ñƒIƒuƒWƒFƒNƒg				//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.15	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix& Matrix::operator-=(const Matrix& mat)
-{
-	// s—ñ“¯m‚Ìs”‚Æ—ñ”‚ª“™‚µ‚­‚È‚¢‚Æ‚«
-	if(m_row != mat.m_row || m_col != mat.m_col){
-		string err = "Matrix can't be subtracted";
-		throw err;
-	}
+  // è¡Œåˆ—åŠ ç®—
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      val[i][j] -= mat.val[i][j];
+    }
+  }
 
-	// s—ñ‰ÁZ
-	for(UINT i = 0; i < m_row; i++){
-		for(UINT j = 0; j < m_col; j++)
-		{
-			val[i][j] -= mat.val[i][j];
-		}
-	}
-
-	return *this;
+  return *this;
 }
 
-//------------------------------------------//
-// ‹@”\		Fs—ñ“¯m‚ÌæZ				//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		Fs—ñƒIƒuƒWƒFƒNƒg				//
-// –ß‚è’l	Fs—ñƒIƒuƒWƒFƒNƒg				//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.13	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix Matrix::operator*(const Matrix& mat) const
-{
-	// ”íæ”‚Ìs—ñ‚Ì—ñ”æ”‚Ìs—ñ‚Ìs”
-	if(m_col != mat.m_row){
-		string err = "Matrix can't be producted";
-		throw err;
-	}
+Matrix Matrix::operator*(const Matrix &mat) const {
+  // è¢«ä¹—æ•°ã®è¡Œåˆ—ã®åˆ—æ•°ï¼ä¹—æ•°ã®è¡Œåˆ—ã®è¡Œæ•°
+  if (m_col != mat.m_row) {
+    string err = "Matrix can't be producted";
+    throw err;
+  }
 
-	// ‰ğ‚Æ‚È‚és—ñi”íæ”‚Ìs—ñ‚Ì—ñ”Aæ”‚Ìs—ñ‚Ìs”j
-	Matrix matAns(m_row, mat.m_col);
+  // è§£ã¨ãªã‚‹è¡Œåˆ—ï¼ˆè¢«ä¹—æ•°ã®è¡Œåˆ—ã®åˆ—æ•°ã€ä¹—æ•°ã®è¡Œåˆ—ã®è¡Œæ•°ï¼‰
+  Matrix matAns(m_row, mat.m_col);
 
-	// s—ñ‚ÌæZ
-	for(UINT i = 0; i < m_row; i++){
-		for(UINT j = 0; j < mat.m_col; j++)
-		{
-			for(UINT k = 0; k < m_row; k++)
-			{
-				matAns.val[i][j] += val[i][k] * mat.val[k][j];
-			}
-		}
-	}
+  // è¡Œåˆ—ã®ä¹—ç®—
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < mat.m_col; j++) {
+      for (UINT k = 0; k < m_row; k++) {
+        matAns.val[i][j] += val[i][k] * mat.val[k][j];
+      }
+    }
+  }
 
-	return matAns;
+  return matAns;
 }
 
-//------------------------------------------//
-// ‹@”\		Fs—ñ‚Æ’l‚ÌæZ				//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		Fs—ñƒIƒuƒWƒFƒNƒg				//
-// –ß‚è’l	Fs—ñƒIƒuƒWƒFƒNƒg				//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.13	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix Matrix::operator*(CDBL& in_val) const
-{
-	// ‰ğ‚Æ‚È‚és—ñ
-	Matrix matAns(m_row, m_col);
+Matrix Matrix::operator*(CDBL &in_val) const {
+  // è§£ã¨ãªã‚‹è¡Œåˆ—
+  Matrix matAns(m_row, m_col);
 
-	for(UINT i = 0; i < m_row; i++)
-	{
-		for(UINT j = 0; j < m_col; j++)
-		{
-			matAns.val[i][j] = val[i][j] * in_val;
-		}
-	}
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      matAns.val[i][j] = val[i][j] * in_val;
+    }
+  }
 
-	return matAns;
+  return matAns;
 }
 
-//------------------------------------------//
-// ‹@”\		Fs—ñ‚Æ’l‚ÌæZ				//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		Fs—ñƒIƒuƒWƒFƒNƒg				//
-// –ß‚è’l	Fs—ñƒIƒuƒWƒFƒNƒg				//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.15	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix& Matrix::operator*=(CDBL& in_val)
-{
-	for(UINT i = 0; i < m_row; i++)
-	{
-		for(UINT j = 0; j < m_col; j++)
-		{
-			val[i][j] *= in_val;
-		}
-	}
+Matrix &Matrix::operator*=(CDBL &in_val) {
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      val[i][j] *= in_val;
+    }
+  }
 
-	return *this;
+  return *this;
 }
 
-//------------------------------------------//
-// ‹@”\		Fs—ñ‚Æ’l‚ÌœZ				//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		Fs—ñƒIƒuƒWƒFƒNƒg				//
-// –ß‚è’l	Fs—ñƒIƒuƒWƒFƒNƒg				//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.13	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix Matrix::operator/(CDBL& in_val) const
-{
-	// ‰ğ‚Æ‚È‚és—ñ
-	Matrix matAns(m_row, m_col);
-	double ele[6][6];
+Matrix Matrix::operator/(CDBL &in_val) const {
+  // è§£ã¨ãªã‚‹è¡Œåˆ—
+  Matrix matAns(m_row, m_col);
+  double ele[6][6];
 
-	for(UINT i = 0; i < m_row; i++)
-	{
-		for(UINT j = 0; j < m_col; j++)
-		{
-			matAns.val[i][j] = val[i][j] / in_val;
-			ele[i][j] = matAns.val[i][j];
-		}
-	}
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      matAns.val[i][j] = val[i][j] / in_val;
+      ele[i][j] = matAns.val[i][j];
+    }
+  }
 
-	return matAns;
+  return matAns;
 }
 
-//------------------------------------------//
-// ‹@”\		Fs—ñ‚Æ’l‚ÌœZ				//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		Fs—ñƒIƒuƒWƒFƒNƒg				//
-// –ß‚è’l	Fs—ñƒIƒuƒWƒFƒNƒg				//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.15	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix& Matrix::operator/=(CDBL& in_val)
-{
-	for(UINT i = 0; i < m_row; i++)
-	{
-		for(UINT j = 0; j < m_col; j++)
-		{
-			val[i][j] /= in_val;
-		}
-	}
+Matrix &Matrix::operator/=(CDBL &in_val) {
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      val[i][j] /= in_val;
+    }
+  }
 
-	return *this;
+  return *this;
 }
 
-//------------------------------------------//
-// ‹@”\		F“]’us—ñ‚ğ‹‚ß‚é				//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		Fs—ñ							//
-// –ß‚è’l	F‰ğ							//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.08.13	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Matrix Matrix::transpose() const
-{
-	// ‰ğ‚Æ‚È‚és—ñis‚Æ—ñ‚ğ”½‘Î‚Éİ’èj
-	Matrix matAns(m_col, m_row);
+Matrix Matrix::transpose() const {
+  // è§£ã¨ãªã‚‹è¡Œåˆ—ï¼ˆè¡Œã¨åˆ—ã‚’åå¯¾ã«è¨­å®šï¼‰
+  Matrix matAns(m_col, m_row);
 
-	for(UINT i = 0; i < m_row; i++)
-	{
-		for(UINT j = 0;j < m_col; j++)
-		{
-			matAns.val[i][j] = val[j][i];
-		}
-	}
+  for (UINT i = 0; i < m_row; i++) {
+    for (UINT j = 0; j < m_col; j++) {
+      matAns.val[i][j] = val[j][i];
+    }
+  }
 
-	return matAns;
+  return matAns;
 }

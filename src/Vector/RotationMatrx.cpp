@@ -1,145 +1,76 @@
-//------------------------------------------//
-// –¼‘O			FÀ•WƒNƒ‰ƒX				//
-// CPU			F							//
-// ƒRƒ“ƒpƒCƒ‰	FVisual C++				//
-// ‹@”\			FÀ•WƒNƒ‰ƒX				//
-//----------------- —š—ğ -------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.05.15	Vˆä	V‹Kì¬			//
-//------------------------------------------//
 
-//------------------------------------------//
-//				ƒCƒ“ƒNƒ‹[ƒh				//
-//------------------------------------------//
 #include "RotationMatrix.h"
 
-//------------------------------------------//
-// ‹@”\		FƒRƒ“ƒXƒgƒ‰ƒNƒ^				//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		F‚È‚µ							//
-// –ß‚è’l	F‚È‚µ							//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.11.02	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-RotationMatrix::RotationMatrix()
-{
-	for (int i = 0; i < NUM; i++) {
-		for (int j = 0; j < NUM; j++) {
-			element[i][j] = 0;
-		}
-	}
+RotationMatrix::RotationMatrix() {
+  for (int i = 0; i < NUM; i++) {
+    for (int j = 0; j < NUM; j++) {
+      element[i][j] = 0;
+    }
+  }
 }
 
-RotationMatrix::RotationMatrix(
-	const double &phi,		// x²ü‚è‚ÌŠp“x
-	const double &sit,		// y²ü‚è‚ÌŠp“x
-	const double &psi)		// z²ü‚è‚ÌŠp“x
+RotationMatrix::RotationMatrix(const double &phi, // xè»¸å‘¨ã‚Šã®è§’åº¦
+                               const double &sit, // yè»¸å‘¨ã‚Šã®è§’åº¦
+                               const double &psi) // zè»¸å‘¨ã‚Šã®è§’åº¦
 {
-	calcRotateMat(phi, sit, psi);
+  calcRotateMat(phi, sit, psi);
 }
 
-//------------------------------------------//
-// ‹@”\		F‰ñ“]s—ñ‚ğ‹‚ß‚é				//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		F‚È‚µ							//
-// –ß‚è’l	F‚È‚µ							//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.06.17	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-void RotationMatrix::calcRotateMat(const double &phi, const double &sit, const double &psi)
-{
-	// ŠeŠp“x‚ÌOŠpŠÖ”
-	const double sphi = sin( phi ); 
-	const double cphi = cos( phi );
-	const double ssit = sin( sit );
-	const double csit = cos( sit );
-	const double spsi = sin( psi );
-	const double cpsi = cos( psi );
+void RotationMatrix::calcRotateMat(const double &phi, const double &sit,
+                                   const double &psi) {
+  // å„è§’åº¦ã®ä¸‰è§’é–¢æ•°
+  const double sphi = sin(phi);
+  const double cphi = cos(phi);
+  const double ssit = sin(sit);
+  const double csit = cos(sit);
+  const double spsi = sin(psi);
+  const double cpsi = cos(psi);
 
-	// ‰ñ“]s—ñ
-	element[0][0] = csit * cpsi; element[0][1] = sphi * ssit * cpsi - cphi * spsi; element[0][2] = cphi * ssit * cpsi - sphi * spsi;
-	element[1][0] = csit * spsi; element[1][1] = sphi * ssit * spsi + cphi * cpsi; element[1][2] = cphi * ssit * spsi - sphi * cpsi;
-	element[2][0] =	-ssit	; element[2][1] =			sphi * csit			   ; element[2][2] =			cphi * csit			  ;
+  // å›è»¢è¡Œåˆ—
+  element[0][0] = csit * cpsi;
+  element[0][1] = sphi * ssit * cpsi - cphi * spsi;
+  element[0][2] = cphi * ssit * cpsi - sphi * spsi;
+  element[1][0] = csit * spsi;
+  element[1][1] = sphi * ssit * spsi + cphi * cpsi;
+  element[1][2] = cphi * ssit * spsi - sphi * cpsi;
+  element[2][0] = -ssit;
+  element[2][1] = sphi * csit;
+  element[2][2] = cphi * csit;
 }
 
-//------------------------------------------//
-// ‹@”\		FƒxƒNƒgƒ‹‰ñ“]					//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		FƒxƒNƒgƒ‹						//
-// –ß‚è’l	FƒxƒNƒgƒ‹						//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.06.17	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Vector RotationMatrix::rotateVec(const Vector &vecArg) const
-{
-	Vector vecAns(
-		element[0][0] * vecArg.getx() + element[0][1] * vecArg.gety() + element[0][2] * vecArg.getz(),
-		element[1][0] * vecArg.getx() + element[1][1] * vecArg.gety() + element[1][2] * vecArg.getz(),
-		element[2][0] * vecArg.getx() + element[2][1] * vecArg.gety() + element[2][2] * vecArg.getz()
-	);
-	
-	return vecAns;
+Vector RotationMatrix::rotateVec(const Vector &vecArg) const {
+  Vector vecAns(element[0][0] * vecArg.getx() + element[0][1] * vecArg.gety() +
+                    element[0][2] * vecArg.getz(),
+                element[1][0] * vecArg.getx() + element[1][1] * vecArg.gety() +
+                    element[1][2] * vecArg.getz(),
+                element[2][0] * vecArg.getx() + element[2][1] * vecArg.gety() +
+                    element[2][2] * vecArg.getz());
+
+  return vecAns;
 }
 
-//------------------------------------------//
-// ‹@”\		FƒxƒNƒgƒ‹‹t‰ñ“]				//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		FƒxƒNƒgƒ‹						//
-// –ß‚è’l	FƒxƒNƒgƒ‹						//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.06.19	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-Vector RotationMatrix::rotateInvVec(const Vector &vecArg) const
-{
-	Vector vecAns(
-		element[0][0] * vecArg.getx() + element[1][0] * vecArg.gety() + element[2][0] * vecArg.getz(),
-		element[0][1] * vecArg.getx() + element[1][1] * vecArg.gety() + element[2][1] * vecArg.getz(),
-		element[0][2] * vecArg.getx() + element[1][2] * vecArg.gety() + element[2][2] * vecArg.getz()
-	);
-	
-	return vecAns;
+Vector RotationMatrix::rotateInvVec(const Vector &vecArg) const {
+  Vector vecAns(element[0][0] * vecArg.getx() + element[1][0] * vecArg.gety() +
+                    element[2][0] * vecArg.getz(),
+                element[0][1] * vecArg.getx() + element[1][1] * vecArg.gety() +
+                    element[2][1] * vecArg.getz(),
+                element[0][2] * vecArg.getx() + element[1][2] * vecArg.gety() +
+                    element[2][2] * vecArg.getz());
+
+  return vecAns;
 }
 
-//------------------------------------------//
-// ‹@”\		Fs—ñ‚ÌÏ						//
-// ’ˆÓ		F‚È‚µ							//
-// ƒƒ‚		F‚È‚µ							//
-// QÆ		F‚È‚µ							//
-// ìÒ		FVˆä							//
-// ˆø”		FƒxƒNƒgƒ‹						//
-// –ß‚è’l	FƒxƒNƒgƒ‹						//
-// -----------------------------------------//
-// “ú•t			ìÒ	“à—e				//
-// 2012.11.08	Vˆä	V‹Kì¬			//
-//------------------------------------------//
-RotationMatrix RotationMatrix::operator*(const RotationMatrix& rmatArg) const
-{
-	RotationMatrix rmatAns;
+RotationMatrix RotationMatrix::operator*(const RotationMatrix &rmatArg) const {
+  RotationMatrix rmatAns;
 
-	// s—ñ‚ÌæZ
-	for(UINT i = 0; i < NUM; i++){
-		for(UINT j = 0; j < NUM; j++){
-			for(UINT k = 0; k < NUM; k++){
-				rmatAns.element[i][j] += element[i][k] * rmatArg.element[k][j];
-			}
-		}
-	}
+  // è¡Œåˆ—ã®ä¹—ç®—
+  for (UINT i = 0; i < NUM; i++) {
+    for (UINT j = 0; j < NUM; j++) {
+      for (UINT k = 0; k < NUM; k++) {
+        rmatAns.element[i][j] += element[i][k] * rmatArg.element[k][j];
+      }
+    }
+  }
 
-	return rmatAns;
+  return rmatAns;
 }
