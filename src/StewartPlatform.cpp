@@ -72,7 +72,9 @@ StewartPlatform::~StewartPlatform() {
 
 void StewartPlatform::inverseDisplacement() {
   // 回転行列
-  RotationMatrix rotMatT(sixDof.getPhi(), sixDof.getSit(), sixDof.getPsi());
+  RotationMatrix rotMatT(platformPosition.getRotationX(),
+                         platformPosition.getRotationY(),
+                         platformPosition.getRotationZ());
 
   //------------------------------------------//
   // ベクトル回転 //
@@ -93,7 +95,9 @@ void StewartPlatform::inverseDisplacement() {
 
 #if 1
   // R(X, Y, Z) = platform(x, y, z)	動作領域計算用
-  vecP.set(sixDof.getx(), sixDof.gety(), sixDof.getz());
+  vecP.set(platformPosition.getTranslationX(),
+           platformPosition.getTranslationY(),
+           platformPosition.getTranslationZ());
   vecP += vecPdef;
 #endif
 
@@ -180,11 +184,11 @@ void StewartPlatform::calculateJacobianMatrix() {
   jacobianDeterminant = jacobianMatrix.det();
 }
 
-void StewartPlatform::changePosition(CDBL &x, CDBL &y, CDBL &z, CDBL &phi,
-                                     CDBL &theta, CDBL &psi) {
+void StewartPlatform::changePosition(Position &position) {
   // 可動領域判定リセット
   beWithinLimit();
-  sixDof.setData(x, y, z, phi, theta, psi);
+
+  platformPosition = position;
   inverseDisplacement();
   judgeMechanismState();
 

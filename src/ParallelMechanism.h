@@ -1,5 +1,6 @@
 // Copyright (c) 2017 shoarai
 
+#include "Position.h"
 #include "Vector/SquareMatrix.h"
 #include "Vector/Vector.h"
 
@@ -26,8 +27,7 @@ public:
   ParallelMechanism();
   virtual ~ParallelMechanism(){};
 
-  virtual void changePosition(CDBL &x, CDBL &y, CDBL &z, CDBL &phi, CDBL &theta,
-                              CDBL &psi) = 0;
+  virtual void changePosition(Position &platformPosition) = 0;
   virtual void calculateActuatorVelocity(CDBL &Vx, CDBL &Vy, CDBL &Vz,
                                          CDBL &Wphi, CDBL &Wtheta,
                                          CDBL &Wpsi) = 0;

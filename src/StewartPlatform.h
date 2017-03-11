@@ -1,7 +1,5 @@
 // Copyright (c) 2017 shoarai
 
-#pragma once
-
 #include "ParallelMechanism.h"
 #include "SixDOF.h"
 #include "StewartPlatformParts.h"
@@ -20,13 +18,12 @@ private:
   BasePlate *basePlate;            // ベース
   ExpansibleLeg *leg[LEG_NUM_MAX]; // 可変長の脚
 
-  SixDOF sixDof; // 6自由度姿勢
+  Position platformPosition;
   SixDOF sixVel; // 6自由度速度
 public:
   StewartPlatform();
   ~StewartPlatform();
-  void changePosition(CDBL &x, CDBL &y, CDBL &z, CDBL &phi, CDBL &theta,
-                      CDBL &psi);
+  void changePosition(Position &platformPosition);
   void calculateActuatorVelocity(CDBL &Vx, CDBL &Vy, CDBL &Vz, CDBL &Wphi,
                                  CDBL &Wtheta, CDBL &Wpsi);
 

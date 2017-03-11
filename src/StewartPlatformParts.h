@@ -25,27 +25,14 @@ public:
   Vector vecS[6];                // 球面軸受のベクトル：Si(i = 0〜5)
 };
 
-// 可変長の脚
 class ExpansibleLeg {
 private:
-  double length; // 長さ
-  double maxLen; // 最大の長さ
-  double minLen; // 最小の長さ
+  double length;
+  double maxLen;
+  double minLen;
 
 public:
-  ExpansibleLeg(CDBL &len1, CDBL &len2) {
-    if (len1 >= len2) {
-      maxLen = len1;
-      minLen = len2;
-    } else {
-      maxLen = len2;
-      minLen = len1;
-    }
-
-    // 最大と最小の長さの中間
-    length = (maxLen - minLen) / 2 + minLen;
-  }
-
+  ExpansibleLeg(CDBL &maxLength, CDBL &minLength);
   Vector vecL; // 脚のベクトル：Li(i = 0〜5)
 
   // 脚長設定

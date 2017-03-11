@@ -30,3 +30,9 @@ BasePlate::BasePlate(CDBL &rad, CDBL &ang)
   vecS[5].set(radius * sin(PI / 2 - angle - angle2 / 2),
               radius * cos(PI / 2 - angle - angle2 / 2), 0);
 }
+
+ExpansibleLeg::ExpansibleLeg(CDBL &maxLength, CDBL &minLength) {
+  maxLen = maxLength;
+  minLen = minLength;
+  length = (maxLen - minLen) / 2 + minLen;
+}
